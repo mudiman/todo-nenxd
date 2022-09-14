@@ -1,0 +1,97 @@
+service: todo-muxt
+
+plugins:
+  - serverless-localstack
+  - serverless-plugin-typescript
+  - serverless-plugin-optimize
+  - serverless-offline
+  - serverless-dynamodb-local
+
+provider:
+ name: aws
+ stage: local
+ runtime: nodejs12.x
+ profile: localstack
+
+package:
+  individually: true
+
+functions:
+ main: # The name of the lambda function
+   # The module 'handler' is exported in the file 'src/lambda'
+   handler: src/lambda.handler
+   package:
+      exclude:
+        - ./**
+      include:
+        - ./src/lambda.ts
+   events:
+     - http:
+         method: any
+         path: /
+         cors: true
+
+custom:
+  localstack:
+    debug: true
+    stages:
+      # list of stages for which the plugin should be enabled
+      - local
+    host: http://localhost  # optional - LocalStack host to connect to
+    edgePort: 4566  # optional - LocalStack edge port to connect to
+    autostart: true  # optional - Start LocalStack in Docker on Serverless deploy
+    networks: #optional - attaches the list of networks to the localstack docker container after startup
+      - host
+      - overlay
+      - my_custom_network
+    endpoints:
+      # This section is optional - can be used for customizing the target endpoints
+      S3: http://localhost:4572
+      DynamoDB: http://localhost:4570
+      CloudFormation: http://localhost:4581
+      Elasticsearch: http://localhost:4571
+      ES: http://localhost:4578
+      SNS: http://localhost:4575
+      SQS: http://localhost:4576
+      Lambda: http://localhost:4574
+      Kinesis: http://localhost:4568
+    lambda:
+      # Enable this flag to improve performance
+      mountCode: false
+    docker:
+      # Enable this flag to run "docker ..." commands as sudo
+      sudo: False
+  stages:
+    local:
+      ...
+
+resources:
+  Resources:
+    usersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: usersTable
+        AttributeDefinitions:
+          - AttributeName: email
+            AttributeType: S
+        KeySchema:
+          - AttributeName: email
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    
+    todosTable:
+      Type: AWS::DynamoDB::Table
+      DeletionPolicy : Retain
+      Properties:
+        TableName: todosTable
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
