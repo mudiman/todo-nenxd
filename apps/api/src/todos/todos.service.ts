@@ -5,6 +5,7 @@ import { Model } from 'dynamoose/dist/Model';
 import { CreateTodoInput } from './dto/create-todo.input';
 import TodoModel from './dto/todos';
 import { UpdateTodoInput } from './dto/update-todo.input';
+import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class TodosService {
@@ -14,12 +15,13 @@ export class TodosService {
     this.model = TodoModel;
   }
 
-  async create(createTodoInput: CreateTodoInput) {
+  async create(createTodoInput: CreateTodoInput, user: User) {
+    console.info('aaa', createTodoInput, user)
     const result = await this.model.create({
-      id: uuid(),
-      body: createTodoInput.body,
-      completed: createTodoInput.completed
+      ...createTodoInput,
+      id: uuid()
     })
+    console.info('result', result)
     if (!result) {
       throw new Error("Created create todo");
     }
@@ -36,18 +38,25 @@ export class TodosService {
   }
 
   async findOne(id: string) {
-    return await this.model.get(id);
+    const todo = await this.model.get({ id: id });
+    if (todo == undefined) throw new Error("Todo does not exist");
+    return todo;
   }
 
   async update(id: string, updateTodoInput: UpdateTodoInput) {
-    return await this.model.update({
-      id: id,
-      body: updateTodoInput.body,
-      completed: updateTodoInput.completed,
-    });
+    const todo = await this.model.get({ id: id });
+    if (todo == undefined) throw new Error("Todo does not exist");
+    return await this.model.update(updateTodoInput);
   }
 
   async remove(id: string) {
-    return await this.model.delete(id);
+    try {
+      const user = await this.model.get({ id: id });
+      if (user == undefined) throw new Error("Todo does not exist");
+      await this.model.delete(id);
+      return user;
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 }

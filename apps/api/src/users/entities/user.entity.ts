@@ -1,7 +1,6 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, Int, HideField } from '@nestjs/graphql';
 import UserModel from '../dto/users';
-import { Factory } from "nestjs-seeder";
-import { Schema } from 'dynamoose';
+
 
 @ObjectType()
 export class User extends UserModel {
@@ -18,6 +17,6 @@ export class User extends UserModel {
   @Field(type => String, { nullable: false })
   email: string;
 
-  @Field(type => String, { nullable: false })
+  @HideField()
   password: string;
 }

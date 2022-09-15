@@ -14,9 +14,23 @@ input CreateUserInput {
   password: String!
 }
 
+type LoggedUserOutput {
+  """Generated access_token of the user"""
+  access_token: String!
+}
+
+input LoginUserInput {
+  """email of the user"""
+  email: String!
+
+  """password of the user"""
+  password: String!
+}
+
 type Mutation {
   createTodo(createTodoInput: CreateTodoInput!): Todo!
   createUser(createUserInput: CreateUserInput!): User!
+  loginUser(loginUserInput: LoginUserInput!): LoggedUserOutput!
   removeTodo(id: String!): Todo!
   removeUser(id: String!): User!
   updateTodo(updateTodoInput: UpdateTodoInput!): Todo!
@@ -56,5 +70,4 @@ type User {
   first_name: String!
   id: String!
   last_name: String
-  password: String!
 }

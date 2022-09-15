@@ -3,7 +3,7 @@ import UserModel from "src/users/dto/users";
 
 export const TodoSchema = new dynamoose.Schema({
     id: {
-        type: Number,
+        type: String,
         hashKey: true,
         required: true,
     },

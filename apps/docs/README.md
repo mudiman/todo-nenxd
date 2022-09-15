@@ -29,23 +29,3 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
-## Queries
-
-mutation {
-  createUser(
-    createUserInput: {
-      email: "admin@admin.com",
-      first_name:"admin",
-      password: "1234"
-    }
-  ) {
-    id
-    email
-    first_name
-    password
-  }
-}
-
-## Sources
-
-https://blog.logrocket.com/nestjs-data-dynamoose/

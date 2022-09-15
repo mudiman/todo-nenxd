@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Model } from 'dynamoose/dist/Model';
 import { v4 as uuid } from 'uuid';
+import * as bcrypt from 'bcrypt';
 
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
@@ -15,13 +16,15 @@ export class UsersService {
   }
 
   async create(createUserInput: CreateUserInput) {
+    const saltOrRounds = 10;
+    const password = createUserInput.password;
+    createUserInput.password = await bcrypt.hash(password, saltOrRounds);
+
     const result = await this.model.create({
-      id: uuid(),
-      first_name: createUserInput.first_name,
-      last_name: createUserInput.last_name,
-      email: createUserInput.email,
-      password: createUserInput.password,
-    })
+      ...createUserInput,
+      id: uuid()
+    });
+
     if (!result) {
       throw new Error("Created create new user");
     }
@@ -37,16 +40,32 @@ export class UsersService {
     }
   }
 
+  async findOneByEmail(email: string) {
+    const user = await this.model.get({ email: email });
+    if (user == undefined) throw new Error("User does not exist");
+    return user;
+  }
+
   async findOne(id: string) {
-    console.info('data', id, await this.model.get({ id: id }))
-    return await this.model.get({ id: id });
+    const user = await this.model.get({ id: id });
+    if (user == undefined) throw new Error("User does not exist");
+    return user;
   }
 
   async update(id: string, updateUserInput: UpdateUserInput) {
-    return `This action updates a #${id} user`;
+    const user = await this.model.get({ id: id });
+    if (user == undefined) throw new Error("User does not exist");
+    return await this.model.update({ id: id }, updateUserInput);
   }
 
   async remove(id: string) {
-    return await this.model.delete(id);
+    try {
+      const user = await this.model.get({ id: id });
+      if (user == undefined) throw new Error("User does not exist");
+      await this.model.delete(id);
+      return user;
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 }

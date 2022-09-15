@@ -69,6 +69,102 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 - Website - [https://nestjs.com](https://nestjs.com/)
 - Twitter - [@nestframework](https://twitter.com/nestframework)
 
+## Queries
+
+https://www.npmjs.com/package/dynamodb-admin
+
+Add user
+```
+mutation {
+  createUser(
+    createUserInput: {
+      email: "admin@admin.com",
+      first_name:"admin",
+      password: "1234"
+    }
+  ) {
+    id
+    email
+    first_name
+    password
+  }
+}
+```
+
+Login User
+```
+mutation {
+  loginUser(
+    loginUserInput: {
+      email: "admin@admin.com",
+      password: "1234"
+    }
+  ) {
+    access_token
+  }
+}
+```
+
+Get User by Id
+```
+{
+   user(id: "96116db4-caa5-4995-93c7-7267d586ccb3") {
+    	id
+      first_name
+      email
+   }
+}
+```
+
+Update user
+```
+mutation {
+  updateUser(
+    updateUserInput: {
+      id: "96116db4-caa5-4995-93c7-7267d586ccb3",
+      email: "admin1111111111@admin.com",
+      first_name:"admin11111111",
+      password: "1234"
+    }
+  ) {
+    id
+    email
+    first_name
+    password
+  }
+}
+```
+
+Delete user
+```
+mutation {
+  removeUser(id: "96116db4-caa5-4995-93c7-7267d586ccb3") {
+    id
+    email
+    first_name
+    password
+  }
+}
+```
+
+Add Todo
+```
+mutation {
+  createTodo(
+    createTodoInput: {
+      body: "test"
+    }
+  ) {
+    id
+    body
+  }
+}
+```
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+## Sources
+
+https://blog.logrocket.com/nestjs-data-dynamoose/
+https://makinhs.medium.com/authentication-made-easy-with-nestjs-part-4-of-how-to-build-a-graphql-mongodb-d6057eae3fdf
