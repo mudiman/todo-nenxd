@@ -6,5 +6,5 @@ export class CreateTodoInput {
   body: string;
 
   @Field(type => Boolean, { defaultValue: false })
-  completed: number;
+  completed: boolean;
 }

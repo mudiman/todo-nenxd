@@ -1,5 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { User } from 'src/users/entities/user.entity';
+import { User } from '../..//users/entities/user.entity';
 import TodoModel from '../dto/todos';
 
 @ObjectType()

@@ -86,7 +86,6 @@ mutation {
     id
     email
     first_name
-    password
   }
 }
 ```
@@ -157,14 +156,41 @@ mutation {
   ) {
     id
     body
+    completed
   }
+}
+```
+
+Get Todo by Id
+```
+{
+   todo(id: "10754a21-7f4d-47f4-9576-e7ef43132569") {
+    	id
+      body
+      completed
+   }
+}
+```
+
+Get All user todos
+```
+{
+   todos {
+    	id
+      body
+      completed
+   }
 }
 ```
 ## License
 
 Nest is [MIT licensed](LICENSE).
 
+## Troubleshoot
+Using dyanmodb if you making changes to schema please make sure to delete old schema using cli or dynamodb admin GUI tool
 ## Sources
-
+https://dynamoosejs.com/guide/Schema#get-function--async-function
+https://v1.dynamoosejs.com/api/query/
 https://blog.logrocket.com/nestjs-data-dynamoose/
+https://github.com/hardyscc/nestjs-dynamoose
 https://makinhs.medium.com/authentication-made-easy-with-nestjs-part-4-of-how-to-build-a-graphql-mongodb-d6057eae3fdf
