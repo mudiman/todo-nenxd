@@ -2,8 +2,6 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { DynamooseModule } from 'nestjs-dynamoose';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { join } from 'path';
 import { TodosModule } from './todos/todos.module';
 import { UsersModule } from './users/users.module';
@@ -14,7 +12,7 @@ import { ConfigModule } from '@nestjs/config';
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      debug: true,
+      debug: false,
       playground: true,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
@@ -27,8 +25,6 @@ import { ConfigModule } from '@nestjs/config';
     TodosModule,
     UsersModule,
     AuthModule,
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+  ]
 })
 export class AppModule {}

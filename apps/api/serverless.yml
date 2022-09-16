@@ -3,9 +3,9 @@ service: todo-muxt
 plugins:
   - serverless-localstack
   - serverless-plugin-typescript
-  - serverless-plugin-optimize
-  - serverless-offline
-  - serverless-dynamodb-local
+  #- serverless-plugin-optimize
+  #- serverless-offline
+  #- serverless-dynamodb-local
 
 provider:
  name: aws
@@ -13,18 +13,15 @@ provider:
  runtime: nodejs12.x
  profile: localstack
 
-package:
-  individually: true
 
 functions:
  main: # The name of the lambda function
    # The module 'handler' is exported in the file 'src/lambda'
    handler: src/lambda.handler
    package:
-      exclude:
-        - ./**
-      include:
-        - ./src/lambda.ts
+      patterns:
+        - "!./**"
+        - "./src/lambda.ts"
    events:
      - http:
          method: any
@@ -64,34 +61,3 @@ custom:
   stages:
     local:
       ...
-
-resources:
-  Resources:
-    usersTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: usersTable
-        AttributeDefinitions:
-          - AttributeName: email
-            AttributeType: S
-        KeySchema:
-          - AttributeName: email
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-    
-    todosTable:
-      Type: AWS::DynamoDB::Table
-      DeletionPolicy : Retain
-      Properties:
-        TableName: todosTable
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1

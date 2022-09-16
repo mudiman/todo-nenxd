@@ -19,8 +19,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "sbuild": "serverless webpack --stage local",
-    "sdeploy": "serverless deploy --stage local",
+    "sdeploy": "rm -rf .build/node_modules &&  deploy --stage local",
     "swatch": "nodemon -w src -e '.*' -x 'npm run build'",
     "sstart": "npm run deploy && npm run watch"
   },

@@ -161,9 +161,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/todo-muxt/local/1662892687409-2022-09-11T10:38:07.409Z/main.zip"
+          "S3Key": "serverless/todo-muxt/local/1663346851300-2022-09-16T16:47:31.300Z/todo-muxt.zip"
         },
-        "Handler": "_optimize/todo-muxt-local-main/src/lambda.handler",
+        "Handler": "src/lambda.handler",
         "Runtime": "nodejs12.x",
         "FunctionName": "todo-muxt-local-main",
         "MemorySize": 1024,
@@ -179,14 +179,14 @@
         "MainLogGroup"
       ]
     },
-    "MainLambdaVersionxTgOLq3XKS4ckTQ0wclW9JqpCWwXlA6EowzDZK3Lt8": {
+    "MainLambdaVersionCTmGPGBnizHLoia3xDGWoNo0D2ozeG3p9oNPIOWrJE": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "MainLambdaFunction"
         },
-        "CodeSha256": "lbE5mMsUdSTJKOIP4Ja47pLsqXTZHifBS6NNDdZ4DoA="
+        "CodeSha256": "1tpq4QsdNMdbKpErZk+4fmbmMtv03DNnyZ8EDpk1jPQ="
       }
     },
     "ApiGatewayRestApi": {
@@ -298,7 +298,7 @@
         "MainLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1662892682892": {
+    "ApiGatewayDeployment1663346848120": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -361,7 +361,7 @@
     "MainLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "MainLambdaVersionxTgOLq3XKS4ckTQ0wclW9JqpCWwXlA6EowzDZK3Lt8"
+        "Ref": "MainLambdaVersionCTmGPGBnizHLoia3xDGWoNo0D2ozeG3p9oNPIOWrJE"
       },
       "Export": {
         "Name": "sls-todo-muxt-local-MainLambdaFunctionQualifiedArn"

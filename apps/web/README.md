@@ -1,4 +1,5 @@
 ## Getting Started
+TODO management app front end built using Next.js
 
 First, run the development server:
 
@@ -20,16 +21,13 @@ To learn more about Next.js, take a look at the following resources:
 
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Zustand](https://github.com/pmndrs/zustand)
+- [Zustand](https://github.com/pmndrs/zustand)
+- [ApolloGraphQL](https://www.apollographql.com/docs/react/)
+- [Ant Design](https://ant.design/)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_source=github.com&utm_medium=referral&utm_campaign=turborepo-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
 ## Sources
 
-https://www.prisma.io/blog/fullstack-nextjs-graphql-prisma-2-fwpc6ds155
-https://atomizedobjects.com/blog/react/apollo-client-without-hooks/
+- https://www.prisma.io/blog/fullstack-nextjs-graphql-prisma-2-fwpc6ds155
+- https://atomizedobjects.com/blog/react/apollo-client-without-hooks/
