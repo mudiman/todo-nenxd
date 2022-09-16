@@ -10,7 +10,6 @@ function loadDynamoseConnection() {
 
     // // Set DynamoDB instance to the Dynamoose DDB instance
     // dynamoose.aws.ddb.set(ddb);
-    console.info('process.env.DYNAMODB', process.env.DYNAMODB)
     dynamoose.aws.ddb.local(process.env.DYNAMODB);
 }
 

@@ -1,7 +1,9 @@
 import create from "zustand";
+import { gql } from "@apollo/client";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import appConfig from "../config/app";
+import { apolloClient } from "../pages/_app";
+import { logger } from "../config/logging";
 
 interface AuthState {
   token: string;
@@ -10,8 +12,9 @@ interface AuthState {
   getToken: () => void;
 }
 
-function getToken() {
+export function getToken() {
   const tokenString = sessionStorage.getItem("token");
+  logger.info('tokenString', tokenString)
   return tokenString;
 }
 
@@ -20,23 +23,28 @@ export const useStore = create<AuthState>((set) => ({
   token: "",
   // methods for manipulating state
   login: async (username, password) => {
-    const response = await fetch(`${appConfig.apiHost}/api/auth/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: username,
-        password: password,
-      }),
-    });
-    const login = await response.json();
-    if (response.status == 200) {
+    try {
+      const QUERY = gql`
+mutation {
+  loginUser(
+    loginUserInput: {
+      email: "${username}",
+      password: "${password}"
+    }
+  ) {
+    access_token
+  }
+}
+`;
+      const response = await apolloClient.mutate({
+        mutation: QUERY
+      })
       toast.success("Login successfully");
-      set({ token: login.token });
-      sessionStorage.setItem("token", login.token);
-    } else {
-      toast.success("Login failed");
+      set({ token: response.data.loginUser.access_token });
+      sessionStorage.setItem("token", response.data.loginUser.access_token);
+
+    } catch (error: any) {
+      toast.error(error.message);
     }
   },
   logout: () => {

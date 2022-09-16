@@ -12,7 +12,7 @@ const TodoCreatePage = () => {
   const onFinish = (values: { body: string }) => {
     console.log("Success:", values);
     addTodo(values.body);
-    router.push("/todo/index");
+    router.push("/todo/");
   };
 
   const onFinishFailed = (errorInfo: any) => {

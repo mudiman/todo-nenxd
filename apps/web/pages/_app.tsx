@@ -1,21 +1,20 @@
 import '../less/App.css';
-import type { AppProps as NextAppProps } from "next/app";
 import SiteLayout from '../components/layout/SiteLayout';
+import createApolloClient from '../config/apollo-client';
+import { ApolloProvider } from '@apollo/client';
 
-// modified version - allows for custom pageProps type, falling back to 'any'
-type AppProps<P = any> = {
-    pageProps: P;
-} & Omit<NextAppProps<P>, "pageProps">;
+export const apolloClient = createApolloClient();
 
-// use the new type like so, replacing 'CustomPageProps' with whatever you want
 export default function App({
     Component,
     pageProps,
 }: AppProps<CustomPageProps>) {
     return (
-        <SiteLayout>
-            <Component {...pageProps} />
-        </SiteLayout>
+        <ApolloProvider client={apolloClient}>
+            <SiteLayout>
+                <Component {...pageProps} />
+            </SiteLayout>
+        </ApolloProvider>
 
     )
 }

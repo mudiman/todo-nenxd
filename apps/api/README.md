@@ -189,8 +189,10 @@ Nest is [MIT licensed](LICENSE).
 ## Troubleshoot
 Using dyanmodb if you making changes to schema please make sure to delete old schema using cli or dynamodb admin GUI tool
 ## Sources
+https://www.npmjs.com/package/dynamodb-admin
 https://dynamoosejs.com/guide/Schema#get-function--async-function
 https://v1.dynamoosejs.com/api/query/
 https://blog.logrocket.com/nestjs-data-dynamoose/
 https://github.com/hardyscc/nestjs-dynamoose
 https://makinhs.medium.com/authentication-made-easy-with-nestjs-part-4-of-how-to-build-a-graphql-mongodb-d6057eae3fdf
+https://stackoverflow.com/questions/63865678/nestjs-test-suite-failed-to-run-cannot-find-module-src-article-article-entity

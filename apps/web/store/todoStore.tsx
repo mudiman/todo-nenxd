@@ -1,8 +1,12 @@
 import create from "zustand";
+import { useQuery, gql } from "@apollo/client";
 import { Todo } from "../model/Todo";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import appConfig from "../config/app";
+
+import { apolloClient } from "../pages/_app";
+import { getToken } from "./authStore";
+import { logger } from "../config/logging";
 
 interface TodoState {
   todos: Todo[];
@@ -12,90 +16,135 @@ interface TodoState {
   updateTodo: (id: string, body: String, completed: boolean) => void;
 }
 
-const token = sessionStorage.getItem("token");
 
 export const useStore = create<TodoState>((set) => ({
   // initial state
   todos: [],
   // methods for manipulating state
   getTodos: async () => {
-    const response = await fetch(`${appConfig.apiHost}/api/todos`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const latestTodos = await response.json();
-    console.info("latestTodos", latestTodos);
-    set({ todos: latestTodos });
-    return latestTodos;
-  },
-  addTodo: async (body: String) => {
-    const response: any = await fetch(`${appConfig.apiHost}/api/todos`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        body: body,
-        completed: false,
-      }),
-    });
-    const newTodo = await response.json();
-    if (response.status == 201) {
-      toast.success("todo registered successfully");
-      set((state) => ({
-        todos: [...state.todos, newTodo],
-      }));
-    } else {
-      toast.success("Failed to register new todo");
+    try {
+      const QUERY = gql`
+    {
+       todos {
+          id
+          body
+          completed
+       }
+    }
+    `;
+      const response = await apolloClient.query({
+        query: QUERY,
+        context: {
+          headers: {
+            Authorization: `Bearer ${getToken()}`
+          }
+        }
+      })
+      logger.info("latestTodos", response);
+
+      set({ todos: response.data.todos });
+      return response.data;
+    } catch (error: any) {
+      toast.error(error.message);
     }
   },
-  removeTodo: (id) => {
-    set((state) => ({
-      todos: state.todos.filter((todo) => todo.id !== id),
-    }));
-    fetch(`${appConfig.apiHost}/api/todos/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => {
-        toast.success("Note deleted successfully");
+  addTodo: async (body: String) => {
+    try {
+      const QUERY = gql`
+mutation {
+  createTodo(
+    createTodoInput: {
+      body: "${body}"
+    }
+  ) {
+    id
+    body
+    completed
+  }
+}
+    `;
+      const response = await apolloClient.mutate({
+        mutation: QUERY,
+        context: {
+          headers: {
+            Authorization: `Bearer ${getToken()}`
+          }
+        }
       })
-      .catch((error) => {
-        console.log("Note not found", error);
-        toast.error("Error deleting note.");
-      });
+
+      toast.success("todo registered successfully");
+      set((state) => ({
+        todos: [...state.todos, response.data],
+      }));
+    } catch (error: any) {
+      toast.error(error.message);
+    }
   },
-  updateTodo: (id, body, completed) => {
-    set((state) => ({
-      todos: state.todos.map((todo) =>
-        todo.id === id
-          ? ({ ...todo, completed: completed, body: body } as Todo)
-          : todo
-      ),
-    }));
-    fetch(`${appConfig.apiHost}/api/todos/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        completed: completed,
-        body: body,
-      }),
-    })
-      .then((res) => {
-        toast.success("Note updated successfully.");
+  removeTodo: async (id) => {
+    try {
+      const QUERY = gql`
+mutation {
+  removeTodo(id: "${id}") {
+    id
+    body
+    completed
+  }
+}
+    `;
+      const response = await apolloClient.mutate({
+        mutation: QUERY,
+        context: {
+          headers: {
+            Authorization: `Bearer ${getToken()}`
+          }
+        }
       })
-      .catch((error) => {
-        console.log("Note not found", error);
-        toast.error("Error updating note.");
-      });
+      logger.info("updatetodo", response.data);
+
+      set((state) => ({
+        todos: state.todos.filter((todo) => todo.id !== id),
+      }));
+      toast.success("Todo deleted successfully");
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  },
+  updateTodo: async (id, body, completed) => {
+    try {
+      const QUERY = gql`
+    mutation {
+      updateTodo(
+        updateTodoInput: {
+          id: "${id}"
+          body: "${body}"
+          completed: ${completed}
+        }
+      ) {
+        id
+        body
+        completed
+      }
+    }
+        `;
+      const response = await apolloClient.mutate({
+        mutation: QUERY,
+        context: {
+          headers: {
+            Authorization: `Bearer ${getToken()}`
+          }
+        }
+      })
+      logger.info("updatetodo", response.data.updateTodo);
+      set((state) => ({
+        todos: state.todos.map((todo) =>
+          todo.id === id
+            ? ({ ...todo, completed: completed, body: body } as Todo)
+            : todo
+        ),
+      }));
+      toast.success("Note updated successfully.");
+    } catch (error: any) {
+      toast.error(error.message);
+    }
   },
 }));
