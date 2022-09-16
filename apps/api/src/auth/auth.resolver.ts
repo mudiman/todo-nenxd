@@ -6,7 +6,7 @@ import { LoginUserInput } from './dto/login-user.input';
 
 @Resolver(() => LoggedUserOutput)
 export class AuthResolver {
-  constructor(private readonly authService: AuthService) { }
+  constructor(private readonly authService: AuthService) {}
 
   @Mutation(() => LoggedUserOutput)
   loginUser(@Args('loginUserInput') loginUserInput: LoginUserInput) {

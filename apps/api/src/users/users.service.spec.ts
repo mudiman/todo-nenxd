@@ -10,7 +10,7 @@ describe('UsersService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         UsersService,
-        { provide: UsersService, useValue: createMock<UsersService>() }
+        { provide: UsersService, useValue: createMock<UsersService>() },
       ],
     }).compile();
 

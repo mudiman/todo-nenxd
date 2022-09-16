@@ -2,8 +2,7 @@ import { Menu } from "antd";
 
 import Sider from "antd/lib/layout/Sider";
 import React from "react";
-import { useRouter } from 'next/router'
-
+import { useRouter } from "next/router";
 
 const SiteSidebar = () => {
   const router = useRouter();

@@ -30,5 +30,6 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
 ## Sources
+
 https://www.prisma.io/blog/fullstack-nextjs-graphql-prisma-2-fwpc6ds155
 https://atomizedobjects.com/blog/react/apollo-client-without-hooks/

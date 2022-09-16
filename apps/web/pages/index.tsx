@@ -3,7 +3,6 @@ import { Button } from "ui";
 import Login from "../components/Login";
 import { useStore } from "../store/authStore";
 
-
 export default function Web() {
   const { token, getToken } = useStore();
   useEffect(() => {

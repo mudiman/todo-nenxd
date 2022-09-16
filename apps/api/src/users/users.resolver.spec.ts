@@ -11,8 +11,8 @@ describe('UsersResolver', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         UsersService,
-        {provide: UsersService, useValue: createMock<UsersService>()},
-        UsersResolver
+        { provide: UsersService, useValue: createMock<UsersService>() },
+        UsersResolver,
       ],
     }).compile();
 

@@ -14,7 +14,7 @@ interface AuthState {
 
 export function getToken() {
   const tokenString = sessionStorage.getItem("token");
-  logger.info('tokenString', tokenString)
+  logger.info("tokenString", tokenString);
   return tokenString;
 }
 
@@ -37,12 +37,11 @@ mutation {
 }
 `;
       const response = await apolloClient.mutate({
-        mutation: QUERY
-      })
+        mutation: QUERY,
+      });
       toast.success("Login successfully");
       set({ token: response.data.loginUser.access_token });
       sessionStorage.setItem("token", response.data.loginUser.access_token);
-
     } catch (error: any) {
       toast.error(error.message);
     }

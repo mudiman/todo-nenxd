@@ -74,6 +74,7 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 https://www.npmjs.com/package/dynamodb-admin
 
 Add user
+
 ```
 mutation {
   createUser(
@@ -91,6 +92,7 @@ mutation {
 ```
 
 Login User
+
 ```
 mutation {
   loginUser(
@@ -105,6 +107,7 @@ mutation {
 ```
 
 Get User by Id
+
 ```
 {
    user(id: "96116db4-caa5-4995-93c7-7267d586ccb3") {
@@ -116,6 +119,7 @@ Get User by Id
 ```
 
 Update user
+
 ```
 mutation {
   updateUser(
@@ -135,6 +139,7 @@ mutation {
 ```
 
 Delete user
+
 ```
 mutation {
   removeUser(id: "96116db4-caa5-4995-93c7-7267d586ccb3") {
@@ -147,6 +152,7 @@ mutation {
 ```
 
 Add Todo
+
 ```
 mutation {
   createTodo(
@@ -162,6 +168,7 @@ mutation {
 ```
 
 Get Todo by Id
+
 ```
 {
    todo(id: "10754a21-7f4d-47f4-9576-e7ef43132569") {
@@ -173,6 +180,7 @@ Get Todo by Id
 ```
 
 Get All user todos
+
 ```
 {
    todos {
@@ -182,13 +190,17 @@ Get All user todos
    }
 }
 ```
+
 ## License
 
 Nest is [MIT licensed](LICENSE).
 
 ## Troubleshoot
+
 Using dyanmodb if you making changes to schema please make sure to delete old schema using cli or dynamodb admin GUI tool
+
 ## Sources
+
 https://www.npmjs.com/package/dynamodb-admin
 https://dynamoosejs.com/guide/Schema#get-function--async-function
 https://v1.dynamoosejs.com/api/query/

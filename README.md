@@ -1,5 +1,6 @@
 # TODO Management App
-Work In Progress
+
+
 A sample user todo management serverless application based on modern tech stack. Using NEXT, NEST, GraphQL, DynamoDB, Localstack
 
 ## What's inside?
@@ -34,6 +35,11 @@ This turborepo has some additional tools already setup for you:
 - [PM2](https://pm2.keymetrics.io/)
 - [localstack](https://github.com/localstack/localstack)
 - [Serverless](https://www.serverless.com/)
+
+### Remaining work
+
+- Add frontend for major components
+- Make production optimzation for frontend and backend
 
 ### Build
 

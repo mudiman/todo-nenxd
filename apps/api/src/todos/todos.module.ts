@@ -13,6 +13,6 @@ import { User } from '../users/entities/user.entity';
     UsersModule,
     DynamooseModule.forFeature([{ name: 'Todo', schema: TodoSchema }]),
   ],
-  providers: [TodosResolver, TodosService]
+  providers: [TodosResolver, TodosService],
 })
-export class TodosModule { }
+export class TodosModule {}

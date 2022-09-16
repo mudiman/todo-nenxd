@@ -12,21 +12,23 @@ const todoId = uuid();
 
 const mockUser = new User({
   id: userId,
-  first_name: "test",
-  last_name: "test",
-  email: "test@test.com",
-  password: "pass",
-})
+  first_name: 'test',
+  last_name: 'test',
+  email: 'test@test.com',
+  password: 'pass',
+});
 
 const mockTodo: TodoInterface = {
   completed: false,
   id: todoId,
   body: 'Mock Body',
-  user: mockUser
+  user: mockUser,
 };
 
 const todosServiceMock = {
-  findOne: jest.fn((user: UserInterface, id: number): TodoInterface => mockTodo),
+  findOne: jest.fn(
+    (user: UserInterface, id: number): TodoInterface => mockTodo,
+  ),
   findAll: jest.fn((user: UserInterface): TodoInterface[] => [mockTodo]),
 };
 
@@ -37,8 +39,8 @@ describe('TodosResolver', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         TodosService,
-        {provide: TodosService, useValue: createMock<TodosService>()},
-        TodosResolver, 
+        { provide: TodosService, useValue: createMock<TodosService>() },
+        TodosResolver,
         { provide: TodosService, useValue: todosServiceMock },
       ],
     }).compile();
@@ -59,5 +61,4 @@ describe('TodosResolver', () => {
     const result = await resolver.findAll(mockUser);
     expect(Array.isArray(result)).toEqual(true);
   });
-
 });

@@ -14,7 +14,10 @@ export class TodosResolver {
 
   @UseGuards(GqlAuthGuard)
   @Mutation(() => Todo)
-  async createTodo(@CurrentUser() user: User, @Args('createTodoInput') createTodoInput: CreateTodoInput) {
+  async createTodo(
+    @CurrentUser() user: User,
+    @Args('createTodoInput') createTodoInput: CreateTodoInput,
+  ) {
     return await this.todosService.create(createTodoInput, user);
   }
 
@@ -26,19 +29,32 @@ export class TodosResolver {
 
   @UseGuards(GqlAuthGuard)
   @Query(() => Todo, { name: 'todo' })
-  async findOne(@CurrentUser() user: User, @Args('id', { type: () => String }) id: string) {
+  async findOne(
+    @CurrentUser() user: User,
+    @Args('id', { type: () => String }) id: string,
+  ) {
     return await this.todosService.findOne(id, user);
   }
 
   @UseGuards(GqlAuthGuard)
   @Mutation(() => Todo)
-  async updateTodo(@CurrentUser() user: User, @Args('updateTodoInput') updateTodoInput: UpdateTodoInput) {
-    return await this.todosService.update(updateTodoInput.id, updateTodoInput, user);
+  async updateTodo(
+    @CurrentUser() user: User,
+    @Args('updateTodoInput') updateTodoInput: UpdateTodoInput,
+  ) {
+    return await this.todosService.update(
+      updateTodoInput.id,
+      updateTodoInput,
+      user,
+    );
   }
 
   @UseGuards(GqlAuthGuard)
   @Mutation(() => Todo)
-  removeTodo(@CurrentUser() user: User, @Args('id', { type: () => String }) id: string) {
+  removeTodo(
+    @CurrentUser() user: User,
+    @Args('id', { type: () => String }) id: string,
+  ) {
     return this.todosService.remove(id, user);
   }
 }

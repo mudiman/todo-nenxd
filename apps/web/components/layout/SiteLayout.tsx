@@ -7,7 +7,6 @@ import SiteSidebar from "./SiteSidebar";
 import SiteFooter from "./SiteFooter";
 import { ToastContainer } from "react-toastify";
 
-
 type Props = {
   children: JSX.Element;
 };

@@ -16,7 +16,6 @@ interface TodoState {
   updateTodo: (id: string, body: String, completed: boolean) => void;
 }
 
-
 export const useStore = create<TodoState>((set) => ({
   // initial state
   todos: [],
@@ -24,22 +23,22 @@ export const useStore = create<TodoState>((set) => ({
   getTodos: async () => {
     try {
       const QUERY = gql`
-    {
-       todos {
-          id
-          body
-          completed
-       }
-    }
-    `;
+        {
+          todos {
+            id
+            body
+            completed
+          }
+        }
+      `;
       const response = await apolloClient.query({
         query: QUERY,
         context: {
           headers: {
-            Authorization: `Bearer ${getToken()}`
-          }
-        }
-      })
+            Authorization: `Bearer ${getToken()}`,
+          },
+        },
+      });
       logger.info("latestTodos", response);
 
       set({ todos: response.data.todos });
@@ -67,10 +66,10 @@ mutation {
         mutation: QUERY,
         context: {
           headers: {
-            Authorization: `Bearer ${getToken()}`
-          }
-        }
-      })
+            Authorization: `Bearer ${getToken()}`,
+          },
+        },
+      });
 
       toast.success("todo registered successfully");
       set((state) => ({
@@ -95,10 +94,10 @@ mutation {
         mutation: QUERY,
         context: {
           headers: {
-            Authorization: `Bearer ${getToken()}`
-          }
-        }
-      })
+            Authorization: `Bearer ${getToken()}`,
+          },
+        },
+      });
       logger.info("updatetodo", response.data);
 
       set((state) => ({
@@ -130,10 +129,10 @@ mutation {
         mutation: QUERY,
         context: {
           headers: {
-            Authorization: `Bearer ${getToken()}`
-          }
-        }
-      })
+            Authorization: `Bearer ${getToken()}`,
+          },
+        },
+      });
       logger.info("updatetodo", response.data.updateTodo);
       set((state) => ({
         todos: state.todos.map((todo) =>

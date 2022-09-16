@@ -4,7 +4,6 @@ import { createMock } from '@golevelup/ts-jest';
 import { AuthResolver } from './auth.resolver';
 import { AuthService } from './auth.service';
 
-
 describe('AuthResolver', () => {
   let resolver: AuthResolver;
 
@@ -13,7 +12,7 @@ describe('AuthResolver', () => {
       providers: [
         AuthService,
         { provide: AuthService, useValue: createMock<AuthService>() },
-        AuthResolver
+        AuthResolver,
       ],
     }).compile();
 
