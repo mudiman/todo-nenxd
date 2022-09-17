@@ -1,5 +1,4 @@
 import * as dynamoose from 'dynamoose';
-import UserModel from '../../users/dto/users';
 
 export const TodoSchema = new dynamoose.Schema(
   {
@@ -22,7 +21,9 @@ export const TodoSchema = new dynamoose.Schema(
       type: Boolean,
       default: false,
     },
-    user: UserModel,
+    user: {
+      type: String,
+    },
   },
   {
     saveUnknown: true,
@@ -46,6 +47,7 @@ export default TodoModel;
 export interface TodoKeyInterface {
   id: string;
 }
+
 export interface TodoInterface extends TodoKeyInterface {
   id: string;
   body?: string;

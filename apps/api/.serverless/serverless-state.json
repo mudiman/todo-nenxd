@@ -7,8 +7,7 @@
     "provider": {
       "name": "aws",
       "stage": "local",
-      "runtime": "nodejs12.x",
-      "profile": "localstack",
+      "runtime": "nodejs16.x",
       "region": "us-east-1",
       "versionFunctions": true,
       "compiledCloudFormationTemplate": {
@@ -174,10 +173,10 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/todo-muxt/local/1663346851300-2022-09-16T16:47:31.300Z/todo-muxt.zip"
+                "S3Key": "serverless/todo-muxt/local/1663436873778-2022-09-17T17:47:53.778Z/todo-muxt.zip"
               },
               "Handler": "src/lambda.handler",
-              "Runtime": "nodejs12.x",
+              "Runtime": "nodejs16.x",
               "FunctionName": "todo-muxt-local-main",
               "MemorySize": 1024,
               "Timeout": 6,
@@ -192,14 +191,14 @@
               "MainLogGroup"
             ]
           },
-          "MainLambdaVersionCTmGPGBnizHLoia3xDGWoNo0D2ozeG3p9oNPIOWrJE": {
+          "MainLambdaVersionZ6XgUPvhQOAXX0yDGtKwR1pHZYrtzYXIU1lmeDrwyvk": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "MainLambdaFunction"
               },
-              "CodeSha256": "1tpq4QsdNMdbKpErZk+4fmbmMtv03DNnyZ8EDpk1jPQ="
+              "CodeSha256": "qvLxmkoY7P4tcHS9zEjbM0hcVLgMqG8fVS6zfJyiVjM="
             }
           },
           "ApiGatewayRestApi": {
@@ -311,7 +310,7 @@
               "MainLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1663346848120": {
+          "ApiGatewayDeployment1663436870175": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -374,7 +373,7 @@
           "MainLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "MainLambdaVersionCTmGPGBnizHLoia3xDGWoNo0D2ozeG3p9oNPIOWrJE"
+              "Ref": "MainLambdaVersionZ6XgUPvhQOAXX0yDGtKwR1pHZYrtzYXIU1lmeDrwyvk"
             },
             "Export": {
               "Name": "sls-todo-muxt-local-MainLambdaFunctionQualifiedArn"
@@ -507,15 +506,8 @@
           "my_custom_network"
         ],
         "endpoints": {
-          "S3": "http://localhost:4572",
-          "DynamoDB": "http://localhost:4570",
-          "CloudFormation": "http://localhost:4581",
-          "Elasticsearch": "http://localhost:4571",
-          "ES": "http://localhost:4578",
-          "SNS": "http://localhost:4575",
-          "SQS": "http://localhost:4576",
           "Lambda": "http://localhost:4574",
-          "Kinesis": "http://localhost:4568"
+          "DynamoDB": "http://localhost:4570"
         },
         "lambda": {
           "mountCode": false
@@ -530,7 +522,8 @@
     },
     "plugins": [
       "serverless-localstack",
-      "serverless-plugin-typescript"
+      "serverless-plugin-typescript",
+      "serverless-offline"
     ],
     "pluginsData": {},
     "functions": {
@@ -574,9 +567,9 @@
         "name": "todo-muxt-local-main",
         "memory": 1024,
         "timeout": 6,
-        "runtime": "nodejs12.x",
+        "runtime": "nodejs16.x",
         "vpc": {},
-        "versionLogicalId": "MainLambdaVersionCTmGPGBnizHLoia3xDGWoNo0D2ozeG3p9oNPIOWrJE"
+        "versionLogicalId": "MainLambdaVersionZ6XgUPvhQOAXX0yDGtKwR1pHZYrtzYXIU1lmeDrwyvk"
       }
     },
     "configValidationMode": "warn",
@@ -601,7 +594,7 @@
     "artifact": "/Users/mudassarfayyaz/workspace/personal/todo_muxt/apps/api/.build/.serverless/todo-muxt.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/todo-muxt/local/1663346851300-2022-09-16T16:47:31.300Z",
+    "artifactDirectoryName": "serverless/todo-muxt/local/1663436873778-2022-09-17T17:47:53.778Z",
     "artifact": "todo-muxt.zip"
   }
 }

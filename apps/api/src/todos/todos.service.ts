@@ -4,8 +4,8 @@ import { InjectModel, Model } from 'nestjs-dynamoose';
 
 import { CreateTodoInput } from './dto/create-todo.input';
 import { UpdateTodoInput } from './dto/update-todo.input';
-import { User } from '../users/entities/user.entity';
 import { TodoInterface, TodoKeyInterface } from './dto/todos';
+import { CurrentUserInterface } from 'src/auth/auth.currentUser';
 
 @Injectable()
 export class TodosService {
@@ -14,11 +14,11 @@ export class TodosService {
     private todoModel: Model<TodoInterface, TodoKeyInterface>,
   ) {}
 
-  async create(createTodoInput: CreateTodoInput, user: User) {
+  async create(createTodoInput: CreateTodoInput, user: CurrentUserInterface) {
     const result = await this.todoModel.create({
       ...createTodoInput,
       id: uuid(),
-      user: user,
+      user: user.id,
     });
     if (!result) {
       throw new Error('Created create todo');
@@ -26,7 +26,7 @@ export class TodosService {
     return result;
   }
 
-  async findAll(user: User) {
+  async findAll(user: CurrentUserInterface) {
     const result = await await this.todoModel
       .scan()
       .where('user')
@@ -37,7 +37,7 @@ export class TodosService {
     return result;
   }
 
-  async findOne(id: string, user: User) {
+  async findOne(id: string, user: CurrentUserInterface) {
     const result = await this.todoModel
       .scan()
       .where('id')
@@ -52,7 +52,7 @@ export class TodosService {
     return todo;
   }
 
-  async update(id: string, updateTodoInput: UpdateTodoInput, user: User) {
+  async update(id: string, updateTodoInput: UpdateTodoInput, user: CurrentUserInterface) {
     const result = await this.todoModel
       .scan()
       .where('id')
@@ -66,7 +66,7 @@ export class TodosService {
     return await this.todoModel.update(updateTodoInput);
   }
 
-  async remove(id: string, user: User) {
+  async remove(id: string, user: CurrentUserInterface) {
     try {
       const result = await this.todoModel
         .scan()

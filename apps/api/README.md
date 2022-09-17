@@ -14,6 +14,19 @@ $ yarn install
 
 ## Running the app
 
+Prep the environment start localstack,
+```
+localstack start -d
+```
+
+start dynamodb admin ui
+```
+# For Windows:
+set DYNAMO_ENDPOINT=http://localhost:4566
+dynamodb-admin
+# For Mac/Linux:
+DYNAMO_ENDPOINT=http://localhost:4566 dynamodb-admin
+```
 ```bash
 # development
 $ yarn run start
@@ -170,7 +183,9 @@ Nest is [MIT licensed](LICENSE).
 
 ## Troubleshoot
 
-Using dyanmodb if you making changes to schema please make sure to delete old schema using cli or dynamodb admin GUI tool
+- Using dyanmodb if you making changes to schema please make sure to delete old schema using cli or dynamodb admin GUI tool
+- Make sure to check docker localstack logs
+- https://stackoverflow.com/questions/42880987/serverless-framework-with-aws-lambda-error-cannot-find-module
 
 ## Sources
 
@@ -182,3 +197,4 @@ Using dyanmodb if you making changes to schema please make sure to delete old sc
 - https://makinhs.medium.com/authentication-made-easy-with-nestjs-part-4-of-how-to-build-a-graphql-mongodb-d6057eae3fdf
 - https://stackoverflow.com/questions/63865678/nestjs-test-suite-failed-to-run-cannot-find-module-src-article-article-entity
 - https://nishabe.medium.com/nestjs-serverless-lambda-aws-in-shortest-steps-e914300faed5
+- https://docs.localstack.cloud/aws/apigatewayv2/
